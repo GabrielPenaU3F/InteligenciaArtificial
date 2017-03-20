@@ -1,7 +1,9 @@
 import sys
 from Problem import Problem
 
-if (len(sys.argv) == 10) or (len(sys.argv) == 17):
-    problem = Problem(sys.argv[1:])
+params = sys.argv[1].split(',')
+if (len(params) == 9):
+    problem = Problem(params)
+
 else:
-    print 'Parametros incorrectos'
+    print 'Incorrect parameters'
