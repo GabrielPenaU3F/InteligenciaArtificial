@@ -43,21 +43,34 @@ class Problem():
                         if (child not in explored) and (child is not None):
                             frontier.append(child)
 
+
             else: #If the frontier is empty and there are no more nodes to add...
                 print 'This problem has no solution'
 
 
     def goal(self, node): #Check if a node contains the solution
         state = node.get_state()
-        for i in range(0,7):
+        goal = True
+        for i in range(len(state)-1):
             if state[i] > state[i+1]:
-                return False
+                goal = False
 
-            else:
-                return True
+        return goal
+
 
     def solution(self, node): #Calculate the solution and show it step by step
-        print node.get_state()
+        actions = 'Moves '
+        solution_node = copy.deepcopy(node)
+        number_of_moves = 0
+        while (node.get_parent() is not None):
+            actions = actions + (node.get_parent_action().get_name() + ' ')
+            node = node.get_parent()
+            number_of_moves += 1
+
+        print actions
+        print ('Total: %d  moves') %(number_of_moves)
+        print 'From ' + str(self.zero_node.get_state())
+
 
 
     def convert_to_int(self, parameters):
