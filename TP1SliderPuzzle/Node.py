@@ -98,3 +98,10 @@ class Node():
             new_state[zero_position] = aux
             new_state[zero_position - 1] = 0
             return new_state
+
+    def is_not_in(self, structure):
+        for i in structure:
+            if (i.get_state().__eq__(self.state)) :
+                return False
+
+        return True
