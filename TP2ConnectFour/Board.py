@@ -80,7 +80,7 @@ class Board():
         for x in xrange(3):  # Height-3
             for y in xrange(4):  # Width-3
                 for i in xrange(3):
-                    if self.grid[7][6] == self.grid[7 - y + i][6 - x + i]:
+                    if self.grid[0][6] == self.grid[y + i][6 - x - i]:
                         count += 1
                     else:
                         break
