@@ -93,4 +93,4 @@ ENV/
 *.pyc
 
 #Folders
-*.downloaded
+*Downloaded
