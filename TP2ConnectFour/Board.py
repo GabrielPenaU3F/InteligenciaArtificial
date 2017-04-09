@@ -13,6 +13,18 @@ class Board():
                 self.grid[y].append('-')
 
 
+    def print_grid(self):
+
+        grid_string = str()
+        for y in xrange(6):
+            for x in xrange(7):
+                grid_string += (self.grid[y][x])
+
+            grid_string += "\n"
+
+        print grid_string
+
+
     def has_a_line_of_four(self):
 
         vertical_four = self.look_for_4_vertical()
@@ -29,28 +41,40 @@ class Board():
     def look_for_4_vertical(self):
 
         count = 0
-        for y in xrange(7): #Width
-            for x in xrange(5): #Height-1
-                if (self.grid[y][x] == self.grid[y][x+1]):
-                    count+=1
-                else: break
+        for x in xrange(7): #Width
+            for y in xrange(3):
+                for i in xrange(1,4):
+                    if (self.grid[y][x] == self.grid[y+i][x] and self.grid[y][x] != '-'):
+                        count += 1
 
-            if count==4: #ConnectFour!
-                return True
+                    else:
+                        count = 0
+                        break
+
+                if count==3: #ConnectFour!
+                    return True
+
+                else: count = 0
 
         return False
 
     def look_for_4_horizontal(self):
 
         count = 0
-        for x in xrange(6): #Height
-            for y in xrange(6): #Width-1
-                if (self.grid[y][x] == self.grid[y+1][x]):
-                    count+=1
-                else: break
+        for y in xrange(6):  #Height
+            for x in xrange(4):
+                for i in xrange(1, 4):
+                    if (self.grid[y][x] == self.grid[y][x+i] and self.grid[y][x] != '-'):
+                        count += 1
 
-            if count==4: #ConnectFour!
-                return True
+                    else:
+                        count = 0
+                        break
+
+                if count == 3:  # ConnectFour!
+                    return True
+
+                else: count = 0
 
         return False
 
@@ -63,24 +87,41 @@ class Board():
         else: return False
 
 
-    def look_for_4_positive_slopes(self):
-
-        count = 0
-        for x in xrange(3): #Height-3
-            for y in xrange(4): #Width-3
-                for i in xrange(3):
-                    if self.grid[0][0] == self.grid[y + i][x + i]:
-                        count += 1
-                    else:
-                        break
-
     def look_for_4_negative_slopes(self):
 
         count = 0
-        for x in xrange(3):  # Height-3
-            for y in xrange(4):  # Width-3
-                for i in xrange(3):
-                    if self.grid[0][6] == self.grid[y + i][6 - x - i]:
+        for x in xrange(4): #Width-3
+            for y in xrange(3): #Height-3
+                for i in xrange(1,4):
+                    if self.grid[y][x] == self.grid[y + i][x + i] and self.grid[y][x] != '-':
                         count += 1
                     else:
+                        count=0
                         break
+
+                if count == 3:
+                    return True
+
+                else: count = 0
+
+        return False
+
+
+    def look_for_4_positive_slopes(self):
+
+        count = 0
+        for x in xrange(4):  # Height-3
+            for y in xrange(3):  # Width-3
+                for i in xrange(1,4):
+                    if self.grid[y][5-x] == self.grid[y + i][5 - x - i] and self.grid[y][x] != '-':
+                        count += 1
+                    else:
+                        count = 0
+                        break
+
+                if count == 3:
+                    return True
+
+                else: count = 0
+
+        return False
