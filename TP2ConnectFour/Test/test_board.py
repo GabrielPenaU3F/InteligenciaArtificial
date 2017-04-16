@@ -1,9 +1,6 @@
 import unittest
 
-import sys
-
 from InteligenciaArtificial.TP2ConnectFour.Board import Board
-
 
 class BoardTest(unittest.TestCase):
 
@@ -86,6 +83,16 @@ class BoardTest(unittest.TestCase):
 
         self.assertTrue(board.look_for_4_positive_slopes())
 
+    def test_not_find_positive_diagonal_c4(self):
+        board = Board()
+        board.grid[1][1] = 'X'
+        board.grid[2][1] = 'X'
+        board.grid[0][3] = 'X'
+        board.grid[1][3] = 'X'
+
+        board.print_grid()
+
+        self.assertFalse(board.look_for_4_positive_slopes())
 
 
 

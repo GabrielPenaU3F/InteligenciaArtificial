@@ -21,15 +21,19 @@ class Game():
 
         self.players = [player1, player2]
 
-        while self.not_finished():
+        finished = False
+        while not finished:
             for player in self.players:
                 player.move()
+                if (self.finished() == True):
+                    finished = True
+                    break
 
 
-    def not_finished(self):
+    def finished(self):
 
         if self.board.has_a_line_of_four():
-            return False
+            return True
 
-        else: return True
+        else: return False
 

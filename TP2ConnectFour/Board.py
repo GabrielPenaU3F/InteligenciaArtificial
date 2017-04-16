@@ -13,6 +13,11 @@ class Board():
                 self.grid[y].append('-')
 
 
+    def get_grid(self):
+
+        return self.grid
+
+
     def print_grid(self):
 
         grid_string = str()
@@ -113,7 +118,7 @@ class Board():
         for x in xrange(4):  # Height-3
             for y in xrange(3):  # Width-3
                 for i in xrange(1,4):
-                    if self.grid[y][5-x] == self.grid[y + i][5 - x - i] and self.grid[y][x] != '-':
+                    if self.grid[y][5 - x] == self.grid[y + i][5 - x - i] and self.grid[y][5 - x] != '-':
                         count += 1
                     else:
                         count = 0
