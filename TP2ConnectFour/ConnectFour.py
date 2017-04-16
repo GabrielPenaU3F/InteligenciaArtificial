@@ -6,7 +6,7 @@ from Game import Game
 def welcome():
 
     entry = raw_input('Welcome to Connect Four. Tip F to play first or S to play second. Tip Q to quit\n')
-    if ((entry == "S") or (entry == "F") or (entry == "Q")) == False:
+    if not ((entry == "S") or (entry == "F") or (entry == "Q")):
         print 'Invalid entry. Try again \n\n'
         welcome()
 

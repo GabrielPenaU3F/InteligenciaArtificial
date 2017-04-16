@@ -292,7 +292,35 @@ class Player():
 
 class HumanPlayer(Player):
 
-    pass
+
+    def move(self):
+
+        print self.board.get_grid()
+
+        entry_column = raw_input('Choose a column from 1 to 7\n')
+
+        if (entry_column == 1 or entry_column == 2 or entry_column == 3 or entry_column == 4 or entry_column == 5 or entry_column == 6 or entry_column == 7):
+
+            column_index = entry_column - 1
+
+            if (self.board.column_not_full(column_index)):
+
+                self.put(column_index)
+
+            else:
+
+                print 'The column is full. Please play elsewhere'
+                self.move()
+
+        else:
+
+            print 'Wrong entry. Please enter the column again'
+            self.move()
+
+
+    def put(self, column_index):
+
+        self.board.insert_in_column(column_index, self.player_string)
 
 
 class IAPlayer(Player):

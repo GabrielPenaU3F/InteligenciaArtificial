@@ -108,6 +108,49 @@ class BoardTest(unittest.TestCase):
         self.assertTrue(board.look_for_4_diagonal())
 
 
+    def test_empty_column_is_not_full(self):
+
+        board = Board()
+
+        board.print_grid()
+
+        self.assertTrue(board.column_not_full(3))
+
+
+    def test_full_column_is_full(self):
+
+        board = Board()
+
+        for y in xrange(6):
+
+            board.grid[y][3] = 'X'
+
+        board.print_grid()
+
+        self.assertFalse(board.column_not_full(3))
+
+
+    def test_insert_into_empty_column(self):
+
+        board = Board()
+
+        board.insert_in_column(2, 'O')
+        board.print_grid()
+
+        self.assertEquals('O', board.grid[5][2])
+
+
+    def test_insert_into_non_empty_column(self):
+
+        board = Board()
+        board.grid[5][2] = 'O'
+        board.grid[4][2] = 'X'
+
+        board.insert_in_column(2, 'O')
+        board.print_grid()
+
+        self.assertEquals('O', board.grid[3][2])
+
 
 if __name__=='__main__':
     unittest.main()

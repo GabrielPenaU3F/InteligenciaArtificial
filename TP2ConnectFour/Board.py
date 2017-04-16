@@ -13,6 +13,29 @@ class Board():
                 self.grid[y].append('-')
 
 
+    def insert_in_column(self, column_index, symbol):
+
+        counter = 0
+        for y in xrange(6):
+
+            if (self.grid[y][column_index] != '-'):
+
+                self.grid[y-1][column_index] = symbol  #Put it above the first filled slot
+                break
+
+            counter += 1
+
+        if (counter == 6):
+
+            self.grid[5][column_index] = symbol #Put it at the bottom line
+
+
+    def column_not_full(self, column_index):
+
+        if (self.grid[0][column_index] != '-'): return False
+        else: return True
+
+
     def get_grid(self):
 
         return self.grid
