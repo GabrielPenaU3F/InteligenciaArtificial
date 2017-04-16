@@ -6,11 +6,17 @@ class Player():
         self.player_string = player_string #Here goes 'X' or 'O'
         self.grid = self.assigned_board.get_grid()
 
-    def count_lined_possibilities_by_number(number):  # Count how many line-2 or line-3 the player has
-        #Player string: 'X' or 'O'
-        #Number: you want to find how many line-3 or line-2 the player has. n = {2, 3}
-        pass
+    def won(self):
 
+        pass #TODO: implement
+
+
+    def count_lined_possibilities_by_number(self, number):  # Count how many line-2 or line-3 the player has
+        lines = 0
+        lines += self.find_how_many_n_vertical_availiable(number)
+        lines += self.find_how_many_n_horizontal_availiable(number)
+        lines += self.find_how_many_n_diagonal_availiable(number)
+        return lines
 
 
     def find_how_many_n_vertical_availiable(self, n):
@@ -206,15 +212,15 @@ class Player():
                         else: count = 0
 
             return total_count
-"""
+
     def find_how_many_n_positive_slopes_availiable(self, n):
 
         total_count = 0
         count = 0
-        for x in xrange(8 - n):
-            for y in xrange(7 - n):
+        for y in xrange(7 - n):
+            for x in xrange(n - 1, 7):
                 for i in xrange(1, n):
-                    if self.grid[y][5 - x] == self.grid[y + i][5 - x - i] and self.grid[y][x] == self.player_string:
+                    if self.grid[y][x] == self.grid[y + i][x - i] and self.grid[y][x] == self.player_string:
                         count += 1
                     else:
                         count = 0
@@ -226,7 +232,7 @@ class Player():
 
                     if (x >= n):
 
-                        if (self.grid[y + n][x + n] == '-'):
+                        if (self.grid[y + n][x - n] == '-'):
 
                             if count == n - 1:  # n-line found!
                                 total_count += 1
@@ -238,23 +244,12 @@ class Player():
                     else:
                         count = 0
 
-                elif (y > 0 and y < 6 - n):
+                elif (y > 0 and y < 5 - (n - 1)):
 
-                    if (x == 0):  # TODO: especificar que ocurre en cada esquina
+                    if (x >= n and x < 6):
 
 
-                        if (self.grid[y + n][x + n] == '-'):
-
-                            if count == n - 1:  # n-line found!
-                                total_count += 1
-                                count = 0
-
-                            else:
-                                count = 0
-
-                    elif (x > 0 and x < 7 - n):
-
-                        if (self.grid[y - 1][x - 1] == '-' or self.grid[y + n][x + n] == '-'):
+                        if (self.grid[y + n][x - n] == '-' or self.grid[y - 1][x + 1] == '-'):
 
                             if count == n - 1:  # n-line found!
                                 total_count += 1
@@ -263,10 +258,22 @@ class Player():
                             else:
                                 count = 0
 
+                    elif (x == 6):
 
-                    elif (x == 7 - n):
+                        if (self.grid[y + n][x - n] == '-'):
 
-                        if (self.grid[y - 1][x - 1] == '-'):
+                            if count == n - 1:  # n-line found!
+                                total_count += 1
+                                count = 0
+
+                            else:
+                                count = 0
+
+                elif (y == 5 - (n - 1)):
+
+                    if (x < 6):
+
+                        if (self.grid[y - 1][x + 1] == '-'):
 
                             if count == n - 1:  # n-line found!
                                 total_count += 1
@@ -276,25 +283,11 @@ class Player():
                                 count = 0
 
 
-                elif (y == 6 - n):
 
-                    if (x > 0 and x <= 7 - n):
-
-                        if (self.grid[y - 1][x - 1] == '-'):
-
-                            if count == n - 1:  # n-line found!
-                                total_count += 1
-                                count = 0
-
-                            else:
-                                count = 0
-
-                    else:
-                        count = 0
 
         return total_count
 
-        """
+
 ###############################
 
 class HumanPlayer(Player):

@@ -115,10 +115,10 @@ class Board():
     def look_for_4_positive_slopes(self):
 
         count = 0
-        for x in xrange(4):  # Height-3
-            for y in xrange(3):  # Width-3
+        for y in xrange(3):  # Height-3
+            for x in xrange(3, 7):  # Width-3
                 for i in xrange(1,4):
-                    if self.grid[y][5 - x] == self.grid[y + i][5 - x - i] and self.grid[y][5 - x] != '-':
+                    if self.grid[y][x] == self.grid[y + i][x - i] and self.grid[y][x] != '-':
                         count += 1
                     else:
                         count = 0

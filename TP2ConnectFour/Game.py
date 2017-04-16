@@ -32,8 +32,9 @@ class Game():
 
     def finished(self):
 
-        if self.board.has_a_line_of_four():
-            return True
+        for player in self.players:
+            if (player.won):
+                return True
 
-        else: return False
+        return False
 

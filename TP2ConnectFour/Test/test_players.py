@@ -193,7 +193,7 @@ class PlayersTest(unittest.TestCase):
 
         self.assertEquals(1, player.find_how_many_n_negative_slopes_availiable(3))
 
-"""
+
     def test_find_0_positive_diagonal_c2s_when_there_are_not(self):
 
         board = Board()
@@ -203,6 +203,43 @@ class PlayersTest(unittest.TestCase):
         board.print_grid()
 
         self.assertEquals(0, player.find_how_many_n_positive_slopes_availiable(2))
-"""
+
+
+    def test_find_2_positive_diagonal_c2s(self):
+
+        board = Board()
+        board.grid[0][3] = 'X'
+        board.grid[1][2] = 'X'
+        board.grid[5][3] = 'X'
+        board.grid[4][4] = 'X'
+
+        player = Player('X', board)
+
+        board.print_grid()
+
+        self.assertEquals(2, player.find_how_many_n_positive_slopes_availiable(2))
+
+
+    def test_find_2_positive_diagonal_c3s_when_there_are_only_2_aviliable_of_3(self):
+
+        board = Board()
+        board.grid[0][2] = 'O'
+        board.grid[1][1] = 'O'
+        board.grid[2][0] = 'O'
+        board.grid[3][3] = 'O'
+        board.grid[2][4] = 'O'
+        board.grid[1][5] = 'O'
+        board.grid[3][2] = 'O'
+        board.grid[4][1] = 'O'
+        board.grid[5][0] = 'O'
+
+
+        player = Player('O', board)
+
+        board.print_grid()
+
+        self.assertEquals(2, player.find_how_many_n_positive_slopes_availiable(3))
+
+
 if __name__=='__main__':
     unittest.main()

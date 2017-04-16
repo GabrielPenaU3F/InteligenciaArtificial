@@ -95,8 +95,19 @@ class BoardTest(unittest.TestCase):
         self.assertFalse(board.look_for_4_positive_slopes())
 
 
+    def test_find_positive_diagonal_c4_when_it_is_at_the_bottom_right(self):
+
+        board = Board()
+        board.grid[2][6] = 'O'
+        board.grid[3][5] = 'O'
+        board.grid[4][4] = 'O'
+        board.grid[5][3] = 'O'
+
+        board.print_grid()
+
+        self.assertTrue(board.look_for_4_diagonal())
+
+
 
 if __name__=='__main__':
     unittest.main()
-
-
