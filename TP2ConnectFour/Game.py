@@ -1,3 +1,4 @@
+from InteligenciaArtificial.TP2ConnectFour.TreeGenerator import TreeGenerator
 from Players import *
 
 from Board import Board
@@ -9,6 +10,7 @@ class Game():
 
         self.board = Board()
         self.players = []
+        self.tree_gen = TreeGenerator()
 
 
     def start(self, starter):
@@ -47,7 +49,10 @@ class Game():
     def get_board(self):
         return self.board
 
-    def set_board(board):
+    def set_board(self, board):
         self.board = board
+
+    def update_board(self, board):
+        self.set_board(board)
 
 

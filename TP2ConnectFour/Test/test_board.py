@@ -1,6 +1,9 @@
 import unittest
 
 from InteligenciaArtificial.TP2ConnectFour.Board import Board
+from InteligenciaArtificial.TP2ConnectFour.Game import Game
+from InteligenciaArtificial.TP2ConnectFour.Players import *
+
 
 class BoardTest(unittest.TestCase):
 
@@ -422,6 +425,76 @@ class BoardTest(unittest.TestCase):
         self.assertEquals(0, board.find_how_many_n_negative_slopes_availiable('O', 3))
         self.assertEquals(0, board.find_how_many_n_vertical_availiable('X', 3))
         self.assertEquals(0, board.find_how_many_n_vertical_availiable('O', 3))
+
+
+    def test_tree_generation(self):
+
+        board = Board()
+
+        for y in xrange(6):
+            for x in xrange(7):
+
+                board.grid[y][x] = 'O'
+
+        board.grid[0][0] = '-'
+        board.grid[1][0] = '-'
+        board.grid[0][1] = '-'
+        board.grid[1][1] = '-'
+
+        game = Game()
+        game.set_board(board)
+        player1 = HumanPlayer('X', game)
+        player2 = IAPlayer('O', game)
+        game.players.append(player1)
+        game.players.append(player2)
+
+        p2_board = player2.assigned_board
+        gen = game.tree_gen
+        new_board = gen.generate_tree(p2_board, 3, 'X', True)
+
+        print '\n Minimax Tree \n'
+
+        level_1_nodes = []
+        level_2_nodes = []
+        level_3_nodes = []
+
+        for x in xrange(new_board.children.__len__()):
+            child = new_board.children[x]
+            level_1_nodes.append(child)
+
+        for x in xrange(level_1_nodes.__len__()):
+            for y in xrange(level_1_nodes[x].children.__len__()):
+
+                child = level_1_nodes[x].children[y]
+                level_2_nodes.append(child)
+
+        for x in xrange(level_2_nodes.__len__()):
+            for y in xrange(level_2_nodes[x].children.__len__()):
+
+                child = level_2_nodes[x].children[y]
+                level_3_nodes.append(child)
+
+        #Print every node by level
+
+        print 'Level 1 Nodes \n'
+
+        for x in xrange(level_1_nodes.__len__()):
+            level_1_nodes[x].print_grid()
+            print '\n'
+
+        print 'Level 2 Nodes \n'
+
+        for x in xrange(level_2_nodes.__len__()):
+            level_2_nodes[x].print_grid()
+            print '\n'
+
+        print 'Level 3 Nodes \n'
+
+        for x in xrange(level_3_nodes.__len__()):
+            level_3_nodes[x].print_grid()
+            print '\n'
+            
+
 
 if __name__=='__main__':
     unittest.main()

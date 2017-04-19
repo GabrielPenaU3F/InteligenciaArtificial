@@ -1,9 +1,11 @@
+
 class Board():
 
     def __init__(self):
 
 
         #Define the dimensions and fill the blanks with -
+        self.value = 0
         self.father = None
         self.children = []
         self.width = 7
@@ -15,41 +17,6 @@ class Board():
                 self.grid[y].append('-')
 
 
-    def generate_tree(self, depth, player_string, player_flag):
-
-        #The flag indicates if the tree has to be generated with
-        #the proper player string (True) or with a symbol that represents
-        #the other player (False)
-
-        if (depth > 0):
-
-            if (player_flag == True):
-
-                self.generate_children(player_string)
-
-            else: self.generate_children('$')
-            #The symbol $ represents 'the non-IA player'
-
-            new_player_flag = not player_flag #Next turn, the next player plays
-
-
-            for x in xrange(self.children.__len__()):
-
-                self.children[x].generate_tree(depth - 1, player_string, new_player_flag)
-
-
-
-    def generate_children(self, player_string):
-
-        for x in xrange(7):
-
-            if (self.column_not_full(x)):
-                child = Board()
-                child.set_grid(self.grid)
-                child.set_player_string(player_string)
-                child.set_father(self)
-                child.insert_in_column(x, player_string)
-                self.children.append(child)
 
 
     def assign_value(self, value):
@@ -126,9 +93,45 @@ class Board():
             for x in xrange(7):
                 grid_string += (self.grid[y][x])
 
-            grid_string += "\n"
+            grid_string += '\n'
 
         print grid_string
+
+    def print_value(self):
+
+        print self.value
+        print '\n'
+
+
+    def calculate_value_from_children(self):
+
+        values = []
+        for x in xrange(self.children.__len__()):
+
+            values.append(self.children[x].value)
+
+        if (self.player_string != '$'):
+
+            return max(values)
+
+        elif (self.player_string == '$'):
+
+            return min(values)
+
+
+    def find_child_with_max_value(self):
+
+        actual = self.children[0]
+
+        for x in xrange(1, self.children.__len__()):
+
+            if (self.children[x].value > actual.value):
+
+                actual = self.children[x]
+
+        return actual
+
+
 
 
     def change_board_enemy_string(self, enemy_string):
