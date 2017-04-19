@@ -1,291 +1,31 @@
 class Player():
 
-    def __init__(self, player_string, board):
+    def __init__(self, player_string, game):
 
-        self.assigned_board = board
+
+        self.game = game
+        self.assigned_board = game.get_board()
+        self.assigned_board.set_player_string(player_string)
         self.player_string = player_string #Here goes 'X' or 'O'
         self.grid = self.assigned_board.get_grid()
 
     def won(self):
 
-        pass #TODO: implement
+        if(self.board.has_a_line_of_four(self.player_string)): return True
 
+        else: return False
 
-    def count_lined_possibilities_by_number(self, number):  # Count how many line-2 or line-3 the player has
-        lines = 0
-        lines += self.find_how_many_n_vertical_availiable(number)
-        lines += self.find_how_many_n_horizontal_availiable(number)
-        lines += self.find_how_many_n_diagonal_availiable(number)
-        return lines
 
+    def put(self, column_index):
 
-    def find_how_many_n_vertical_availiable(self, n):
+        self.board.insert_in_column(column_index, self.player_string)
 
-            total_count = 0
-            count = 0
-            for x in xrange(7):  # Width
-                for y in xrange(7 - n):
-                    for i in xrange(1, n):
-                        if (self.grid[y][x] == self.grid[y + i][x] and self.grid[y][x] == self.player_string):
-                            count += 1
+    def obtain_enemy_string(self):
 
-                        else:
-                            count = 0
-                            break
+        if (self.player_string == 'O'): return 'X'
+        else: return 'O'
 
-                    # Availiability check
-                    if (y == 0):
 
-                        if (self.grid[y + n][x] == '-'):
-
-                            if count == n-1:  #n-line found!
-                                total_count += 1
-                                count = 0
-
-                            else:
-                                count = 0
-
-                    elif (y > 0 and y < 6 - n):
-
-                        if (self.grid[y - 1][x] == '-' or self.grid[y + n][x] == '-'):
-
-                            if count == n-1:  #n-line found!
-                                total_count += 1
-                                count = 0
-
-                            else:
-                                count = 0
-
-                    elif (y == 6-n):
-
-                        if (self.grid[y - 1][x] == '-'):
-
-                            if count == n-1:  #n-line found!
-                                total_count += 1
-                                count = 0
-
-                            else:
-                                count = 0
-
-
-            return total_count
-
-    def find_how_many_n_horizontal_availiable(self, n):
-
-            total_count = 0
-            count = 0
-            for y in xrange(6):  # Height
-                for x in xrange(8-n):
-                    for i in xrange(1, n):
-                        if (self.grid[y][x] == self.grid[y][x + i] and self.grid[y][x] == self.player_string):
-                            count += 1
-
-                        else:
-                            count = 0
-                            break
-
-                    # Availiability check
-                    if (x == 0):
-
-                        if (self.grid[y][x + n] == '-'):
-
-                            if count == n - 1:  # n-line found!
-                                total_count += 1
-                                count = 0
-
-                            else:
-                                count = 0
-
-                    elif (x > 0 and x < 7 - n):
-
-                        if (self.grid[y][x - 1] == '-' or self.grid[y][x + n] == '-'):
-
-                            if count == n - 1:  # n-line found!
-                                total_count += 1
-                                count = 0
-
-                            else:
-                                count = 0
-
-                    elif (x == 7 - n):
-
-                        if (self.grid[y][x - 1] == '-'):
-
-                            if count == n - 1:  # n-line found!
-                                total_count += 1
-                                count = 0
-
-                            else:
-                                count = 0
-
-            return total_count
-
-
-    def find_how_many_n_diagonal_availiable(self, n):
-
-            positive_slopes = self.find_how_many_n_positive_slopes_availiable()
-            negative_slopes = self.find_how_many_n_negative_slopes_availiable()
-
-            return positive_slopes + negative_slopes
-
-    def find_how_many_n_negative_slopes_availiable(self, n):
-
-            total_count = 0
-            count = 0
-            for x in xrange(8-n):
-                for y in xrange(7-n):
-                    for i in xrange(1, n):
-                        if self.grid[y][x] == self.grid[y + i][x + i] and self.grid[y][x] == self.player_string:
-                            count += 1
-                        else:
-                            count = 0
-                            break
-
-                    # Availiability check
-
-                    if (y == 0):
-
-                        if (x >= 0 and x < 7 - n):
-
-                            if (self.grid[y + n][x + n] == '-'):
-
-                                if count == n - 1:  # n-line found!
-                                    total_count += 1
-                                    count = 0
-
-                                else:
-                                    count = 0
-
-                        else: count = 0
-
-                    elif (y > 0 and y < 6 - n):
-
-                        if (x == 0):  # TODO: especificar que ocurre en cada esquina
-
-
-                            if (self.grid[y + n][x + n] == '-'):
-
-                                if count == n - 1:  # n-line found!
-                                    total_count += 1
-                                    count = 0
-
-                                else:
-                                    count = 0
-
-                        elif (x > 0 and x < 7 - n):
-
-                            if (self.grid[y - 1][x - 1] == '-' or self.grid[y + n][x + n] == '-'):
-
-                                if count == n - 1:  # n-line found!
-                                    total_count += 1
-                                    count = 0
-
-                                else:
-                                    count = 0
-
-
-                        elif (x == 7 - n):
-
-                            if (self.grid[y - 1][x - 1] == '-'):
-
-                                if count == n - 1:  # n-line found!
-                                    total_count += 1
-                                    count = 0
-
-                                else:
-                                    count = 0
-
-
-                    elif (y == 6 - n):
-
-                        if (x > 0 and x <= 7 - n):
-
-                            if (self.grid[y - 1][x - 1] == '-'):
-
-                                if count == n - 1:  # n-line found!
-                                    total_count += 1
-                                    count = 0
-
-                                else:
-                                    count = 0
-
-                        else: count = 0
-
-            return total_count
-
-    def find_how_many_n_positive_slopes_availiable(self, n):
-
-        total_count = 0
-        count = 0
-        for y in xrange(7 - n):
-            for x in xrange(n - 1, 7):
-                for i in xrange(1, n):
-                    if self.grid[y][x] == self.grid[y + i][x - i] and self.grid[y][x] == self.player_string:
-                        count += 1
-                    else:
-                        count = 0
-                        break
-
-                # Availiability check
-
-                if (y == 0):
-
-                    if (x >= n):
-
-                        if (self.grid[y + n][x - n] == '-'):
-
-                            if count == n - 1:  # n-line found!
-                                total_count += 1
-                                count = 0
-
-                            else:
-                                count = 0
-
-                    else:
-                        count = 0
-
-                elif (y > 0 and y < 5 - (n - 1)):
-
-                    if (x >= n and x < 6):
-
-
-                        if (self.grid[y + n][x - n] == '-' or self.grid[y - 1][x + 1] == '-'):
-
-                            if count == n - 1:  # n-line found!
-                                total_count += 1
-                                count = 0
-
-                            else:
-                                count = 0
-
-                    elif (x == 6):
-
-                        if (self.grid[y + n][x - n] == '-'):
-
-                            if count == n - 1:  # n-line found!
-                                total_count += 1
-                                count = 0
-
-                            else:
-                                count = 0
-
-                elif (y == 5 - (n - 1)):
-
-                    if (x < 6):
-
-                        if (self.grid[y - 1][x + 1] == '-'):
-
-                            if count == n - 1:  # n-line found!
-                                total_count += 1
-                                count = 0
-
-                            else:
-                                count = 0
-
-
-
-
-        return total_count
 
 
 ###############################
@@ -294,6 +34,8 @@ class HumanPlayer(Player):
 
 
     def move(self):
+
+        self.board = self.game.get_board()
 
         print self.board.get_grid()
 
@@ -317,12 +59,54 @@ class HumanPlayer(Player):
             print 'Wrong entry. Please enter the column again'
             self.move()
 
+        self.game.update_board(self.board)
 
-    def put(self, column_index):
 
-        self.board.insert_in_column(column_index, self.player_string)
+
+
+
+
 
 
 class IAPlayer(Player):
 
-    pass
+    def move(self):
+
+        self.board = self.game.get_board()
+
+        depth = 3 #How many moves forward it looks
+
+        enemy_string = self.obtain_enemy_string()
+
+        self.board.change_board_enemy_string(enemy_string) #Replaces the other player symbol by '$' in the board
+
+        self.board.generate_tree(depth, self.player_string, True)
+
+        self.build_minimax(self.assigned_board)
+
+
+        #TODO: Complete
+
+        self.board.restore_board_enemy_string(enemy_string) #Restores the original board
+
+        self.game.update_board(self.board)
+
+
+
+    def build_minimax(self, board):
+
+        if (board.children != []):
+
+            for child in xrange(self.assigned_board.children):
+
+                value = self.build_minimax(child)
+                board.assign_value(value)
+
+        else:
+
+            value = board.evaluate_value(self.player_string)
+            board.assign_value(value)
+
+
+
+

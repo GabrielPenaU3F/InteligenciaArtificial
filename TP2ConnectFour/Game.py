@@ -5,20 +5,24 @@ from Board import Board
 
 class Game():
 
+    def __init__(self):
+
+        self.board = Board()
+        self.players = []
+
 
     def start(self, starter):
 
-        self.board = Board()
         if (starter == "F"):
 
-            player1 = HumanPlayer('O', self.board)
-            player2 = IAPlayer('X', self.board)
+            player1 = HumanPlayer('O', self)
+            player2 = IAPlayer('X', self)
             self.players = [player1, player2]
 
         else:
 
-            player1 = IAPlayer('O', self.board)
-            player2 = HumanPlayer('O', self.board)
+            player1 = IAPlayer('O', self)
+            player2 = HumanPlayer('O', self)
             self.players = [player1, player2]
 
 
@@ -39,4 +43,11 @@ class Game():
                 return True
 
         return False
+
+    def get_board(self):
+        return self.board
+
+    def set_board(board):
+        self.board = board
+
 
