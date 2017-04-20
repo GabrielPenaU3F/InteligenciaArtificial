@@ -54,3 +54,7 @@ class TreeGenerator():
                 child.insert_in_column(x, player_string)
 
                 board.children.append(child)
+
+    def destroy(self, board):
+
+        board.children = []

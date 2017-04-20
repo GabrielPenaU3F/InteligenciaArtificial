@@ -44,8 +44,6 @@ class HumanPlayer(Player):
 
         self.assigned_board = self.game.get_board()
 
-        self.assigned_board.print_grid()
-
         entry_column = raw_input('Choose a column from 1 to 7\n')
 
         if (entry_column == '1' or entry_column == '2' or entry_column == '3' or entry_column == '4' or entry_column == '5' or entry_column == '6' or entry_column == '7'):
@@ -70,6 +68,8 @@ class HumanPlayer(Player):
 
         self.game.update_board(self.assigned_board)
 
+        self.assigned_board.print_grid()
+
 
 
 
@@ -87,9 +87,11 @@ class IAPlayer(Player):
 
         self.assigned_board.change_board_enemy_string(enemy_string) #Replaces the other player symbol by '$' in the board
 
-        self.game.tree_gen.generate_tree(self.assigned_board, depth, self.player_string, True)
+        final_board = self.game.tree_gen.generate_tree(self.assigned_board, depth, self.player_string, True)
 
-        self.build_minimax(self.assigned_board)
+        self.build_minimax(final_board)
+
+        self.assigned_board = final_board
 
         target = self.assigned_board.find_child_with_max_value()
 
@@ -98,6 +100,10 @@ class IAPlayer(Player):
         self.assigned_board.restore_board_enemy_string(enemy_string) #Restores the original board
 
         self.game.update_board(self.assigned_board)
+
+        self.destroy_tree()
+
+        self.assigned_board.print_grid()
 
 
 
@@ -116,6 +122,12 @@ class IAPlayer(Player):
 
             value = board.evaluate_value(self.player_string)
             board.assign_value(value)
+
+
+
+    def destroy_tree(self):
+
+        self.game.tree_gen.destroy(self.assigned_board)
 
 
 
