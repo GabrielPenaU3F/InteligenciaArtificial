@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-from InteligenciaArtificial.TP2ConnectFour.Board import Board
+from Board import Board
 
 
 class TreeGenerator():

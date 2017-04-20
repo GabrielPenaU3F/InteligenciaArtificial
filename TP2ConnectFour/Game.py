@@ -1,4 +1,4 @@
-from InteligenciaArtificial.TP2ConnectFour.TreeGenerator import TreeGenerator
+from TreeGenerator import TreeGenerator
 from Players import *
 
 from Board import Board
@@ -24,7 +24,7 @@ class Game():
         else:
 
             player1 = IAPlayer('O', self)
-            player2 = HumanPlayer('O', self)
+            player2 = HumanPlayer('X', self)
             self.players = [player1, player2]
 
 
@@ -41,7 +41,7 @@ class Game():
     def finished(self):
 
         for player in self.players:
-            if (player.won):
+            if (player.won()):
                 return True
 
         return False

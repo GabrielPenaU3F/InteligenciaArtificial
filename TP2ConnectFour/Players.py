@@ -14,7 +14,11 @@ class Player():
 
     def won(self):
 
-        if(self.assigned_board.has_a_line_of_four(self.player_string)): return True
+        if(self.assigned_board.has_a_line_of_four(self.player_string)):
+
+            self.assigned_board.print_grid()
+            print 'Player %s won!!' %(self.player_string)
+            return True
 
         else: return False
 
@@ -83,7 +87,7 @@ class IAPlayer(Player):
 
         self.assigned_board.change_board_enemy_string(enemy_string) #Replaces the other player symbol by '$' in the board
 
-        self.assigned_board.generate_tree(depth, self.player_string, True)
+        self.game.tree_gen.generate_tree(self.assigned_board, depth, self.player_string, True)
 
         self.build_minimax(self.assigned_board)
 
