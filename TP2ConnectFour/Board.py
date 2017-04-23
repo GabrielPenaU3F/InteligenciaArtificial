@@ -37,10 +37,46 @@ class Board():
         #Problem with this definition: does NOT consider cases like
         # X X - X  or other 'non-linear' cases
 
-        points += 100 * (self.count_lined_possibilities_by_number(player_string, 2))
-        points += 1000 * (self.count_lined_possibilities_by_number(player_string, 3))
-        points -= 100 * (self.count_lined_possibilities_by_number('$', 2))
-        points -= 1000 * (self.count_lined_possibilities_by_number('$', 3))
+        v_lines_2 = self.find_how_many_n_vertical_availiable(player_string, 2)
+        v_lines_3 = self.find_how_many_n_vertical_availiable(player_string, 3)
+        v_lines_4 = self.find_how_many_n_vertical_availiable(player_string, 4)
+        h_lines_2 = self.find_how_many_n_horizontal_availiable(player_string, 2)
+        h_lines_3 = self.find_how_many_n_horizontal_availiable(player_string, 3)
+        h_lines_4 = self.find_how_many_n_horizontal_availiable(player_string, 4)
+        d_lines_2 = self.find_how_many_n_diagonal_availiable(player_string, 2)
+        d_lines_3 = self.find_how_many_n_diagonal_availiable(player_string, 3)
+        d_lines_4 = self.find_how_many_n_diagonal_availiable(player_string, 4)
+
+        other_v_lines_2 = self.find_how_many_n_vertical_availiable('$', 2)
+        other_v_lines_3 = self.find_how_many_n_vertical_availiable('$', 3)
+        other_v_lines_4 = self.find_how_many_n_vertical_availiable('$', 4)
+        other_h_lines_2 = self.find_how_many_n_horizontal_availiable('$', 2)
+        other_h_lines_3 = self.find_how_many_n_horizontal_availiable('$', 3)
+        other_h_lines_4 = self.find_how_many_n_horizontal_availiable('$', 4)
+        other_d_lines_2 = self.find_how_many_n_diagonal_availiable('$', 2)
+        other_d_lines_3 = self.find_how_many_n_diagonal_availiable('$', 3)
+        other_d_lines_4 = self.find_how_many_n_diagonal_availiable('$', 4)
+
+        points += 100 * v_lines_2
+        points += 150 * h_lines_2
+        points += 200 * d_lines_2
+        points += 1000 * v_lines_3
+        points += 1250 * h_lines_3
+        points += 1500 * d_lines_3
+        points += 1000000 * v_lines_4
+        points += 1000000 * h_lines_4
+        points += 1000000 * d_lines_4
+
+        points -= 100 * other_v_lines_2
+        points -= 150 * other_h_lines_2
+        points -= 200 * other_d_lines_2
+        points -= 1000 * other_v_lines_3
+        points -= 1250 * other_h_lines_3
+        points -= 1500 * other_d_lines_3
+        points -= 1000000 * other_v_lines_4
+        points -= 1000000 * other_h_lines_4
+        points -= 1000000 * other_d_lines_4
+
 
         return points
 
@@ -260,13 +296,6 @@ class Board():
     #
     #
     #Look for 2 and 3 lines
-
-    def count_lined_possibilities_by_number(self, player_string, number):  # Count how many line-2 or line-3 the player has
-        lines = 0
-        lines += self.find_how_many_n_vertical_availiable(player_string, number)
-        lines += self.find_how_many_n_horizontal_availiable(player_string, number)
-        lines += self.find_how_many_n_diagonal_availiable(player_string, number)
-        return lines
 
 
     def find_how_many_n_vertical_availiable(self, player_string, n):

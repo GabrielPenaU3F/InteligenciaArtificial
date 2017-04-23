@@ -81,7 +81,7 @@ class IAPlayer(Player):
 
     def move(self):
 
-        depth = 3 #How many moves forward it looks
+        depth = 4 #How many moves forward it looks
 
         enemy_string = self.obtain_enemy_string()
 
@@ -115,8 +115,9 @@ class IAPlayer(Player):
 
                 child = board.children[x]
                 self.build_minimax(child)
-                value = board.calculate_value_from_children()
-                board.assign_value(value)
+
+            value = board.calculate_value_from_children()
+            board.assign_value(value)
 
         else:
 
